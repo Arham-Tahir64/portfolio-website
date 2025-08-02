@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AboutMe from "../apps/AboutMe";
 import Projects from "../apps/Projects";
+import Resume from "../apps/Resume";
 import Taskbar from "./Taskbar";
 
 export default function Desktop() {
@@ -44,6 +45,14 @@ export default function Desktop() {
         <span className="text-sm text-center">About Me</span>
       </button>
 
+      <button
+        className="absolute left-8 top-56 flex flex-col items-center text-white drop-shadow-lg hover:scale-105 transition-transform duration-200 w-20"
+        onClick={() => openApp("resume")}
+      >
+        <span className="text-4xl mb-2">📄</span>
+        <span className="text-sm text-center">Resume</span>
+      </button>
+
       <Projects 
         isOpen={openApps.projects || false} 
         onClose={() => closeApp("projects")} 
@@ -52,6 +61,11 @@ export default function Desktop() {
       <AboutMe 
         isOpen={openApps.about || false} 
         onClose={() => closeApp("about")} 
+      />
+
+      <Resume 
+        isOpen={openApps.resume || false} 
+        onClose={() => closeApp("resume")} 
       />
 
       <Taskbar
