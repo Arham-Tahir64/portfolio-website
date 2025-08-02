@@ -1,29 +1,29 @@
+import Window from "../desktop/Window";
+
 interface GitHubProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function GitHub({ isOpen, onClose }: GitHubProps) {
-  if (!isOpen) return null;
-
   const handleGitHubClick = () => {
     window.open('https://github.com/Arham-Tahir64', '_blank');
   };
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-black/60 text-white backdrop-blur-sm">
-      <div className="rounded-lg bg-white/10 backdrop-blur-md p-8 border border-white/20 max-w-md">
+    <Window isOpen={isOpen} onClose={onClose} title="GitHub Profile">
+      <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2">GitHub Profile</h2>
-            <p className="text-sm text-gray-200">
+            <h1 className="text-3xl font-bold mb-4">🐙 GitHub Profile</h1>
+            <p className="text-lg text-gray-200">
               Check out my projects and contributions on GitHub!
             </p>
           </div>
 
-          <div className="text-center p-4 bg-white/10 rounded-lg">
-            <h3 className="text-lg font-semibold mb-2 text-green-300">GitHub Profile</h3>
-            <p className="text-xl font-mono text-white">github.com/arhamtahir</p>
+          <div className="text-center p-6 bg-white/10 rounded-lg border border-white/20">
+            <h3 className="text-xl font-semibold mb-3 text-green-300">GitHub Profile</h3>
+            <p className="text-2xl font-mono text-white mb-4">github.com/Arham-Tahir64</p>
           </div>
 
           <div className="text-center">
@@ -31,6 +31,7 @@ export default function GitHub({ isOpen, onClose }: GitHubProps) {
               onClick={handleGitHubClick}
               className="px-8 py-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center space-x-3 mx-auto text-lg"
             >
+              <span>🐙</span>
               <span>Open GitHub</span>
             </button>
             <p className="text-xs text-gray-300 mt-3">
@@ -38,10 +39,7 @@ export default function GitHub({ isOpen, onClose }: GitHubProps) {
             </p>
           </div>
         </div>
-        <button className="mt-6 underline hover:text-blue-300 transition-colors" onClick={onClose}>
-          close
-        </button>
       </div>
-    </div>
+    </Window>
   );
 } 

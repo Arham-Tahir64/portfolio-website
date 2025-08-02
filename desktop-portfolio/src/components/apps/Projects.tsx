@@ -1,27 +1,28 @@
+import Window from "../desktop/Window";
+
 interface ProjectsProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function Projects({ isOpen, onClose }: ProjectsProps) {
-  if (!isOpen) return null;
-
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-black/60 text-white backdrop-blur-sm">
-      <div className="rounded-lg bg-white/10 backdrop-blur-md p-8 border border-white/20 max-w-md">
+    <Window isOpen={isOpen} onClose={onClose} title="My Projects">
+      <div className="p-6 text-white">
         <div className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold mb-3">🚀 My Projects</h2>
-            <p className="text-sm text-gray-200">
-              Here are some of the projects I've been working on. More coming soon!
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-4">🚀 My Projects</h1>
+            <p className="text-lg text-gray-200">
+              Here are some of the projects I've been working on
             </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="border border-white/20 rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-2">Desktop Portfolio</h3>
-              <p className="text-sm text-gray-200 mb-2">
-                A desktop-inspired portfolio built with React, TypeScript, and Tailwind CSS.
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white/10 rounded-lg p-6 border border-white/20">
+              <h3 className="text-xl font-semibold mb-3 text-blue-300">Portfolio Website</h3>
+              <p className="text-gray-200 mb-4">
+                A desktop-style portfolio built with React, TypeScript, and Tailwind CSS.
+                Features a realistic desktop environment with draggable windows and apps.
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded">React</span>
@@ -30,18 +31,24 @@ export default function Projects({ isOpen, onClose }: ProjectsProps) {
               </div>
             </div>
 
-            <div className="border border-white/20 rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-2">More Projects Coming Soon</h3>
-              <p className="text-sm text-gray-200">
-                I'm working on some exciting new projects. Check back soon!
+            <div className="bg-white/10 rounded-lg p-6 border border-white/20">
+              <h3 className="text-xl font-semibold mb-3 text-green-300">Coming Soon</h3>
+              <p className="text-gray-200 mb-4">
+                More exciting projects are in development. Stay tuned for updates!
               </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded">In Progress</span>
+              </div>
             </div>
           </div>
+
+          <div className="text-center pt-4">
+            <p className="text-gray-300">
+              Check out my GitHub for more projects and contributions!
+            </p>
+          </div>
         </div>
-        <button className="mt-6 underline hover:text-blue-300 transition-colors" onClick={onClose}>
-          close
-        </button>
       </div>
-    </div>
+    </Window>
   );
 } 

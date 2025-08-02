@@ -1,68 +1,95 @@
+import Window from "../desktop/Window";
+
 interface AboutMeProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function AboutMe({ isOpen, onClose }: AboutMeProps) {
-  if (!isOpen) return null;
-
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-black/60 text-white backdrop-blur-sm">
-      <div className="rounded-lg bg-white/10 backdrop-blur-md p-8 border border-white/20 max-w-md">
+    <Window isOpen={isOpen} onClose={onClose} title="About Me">
+      <div className="p-6 text-white">
         <div className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold mb-3">👋 Hi! I'm a passionate developer</h2>
-            <p>
-              Hi — I'm <strong>Arham Tahir</strong>, a Computer Science student at the University of
-              Calgary who loves turning ideas into polished web apps.
-            </p>
-            <p>
-              I build full-stack projects with <em>React / Next.js, TypeScript, Rust, Docker, and Tailwind</em>,
-              and I'm exploring blockchain & Machine Learning projects.
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-4">👋 Hi, I'm Arham Tahir</h1>
+            <p className="text-lg text-gray-200">
+              A passionate software developer and computer science student
             </p>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-3">💻 Skills & Technologies</h3>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <h4 className="font-medium text-blue-300 mb-2">Languages</h4>
-                <ul className="space-y-1 text-gray-200">
-                  <li>• JavaScript/TypeScript</li>
-                  <li>• Python</li>
-                  <li>• Java</li>
-                  <li>• C++</li>
-                  <li>• Rust</li>
-                  <li>• HTML/CSS</li>
-                  <li>• SQL</li>
-                </ul>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold text-blue-300">Languages</h2>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <p>JavaScript/TypeScript</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <p>Python</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <p>Java</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <p>C++</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <p>Rust</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <p>HTML/CSS</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <p>SQL</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-medium text-green-300 mb-2">Frameworks & Tools</h4>
-                <ul className="space-y-1 text-gray-200">
-                  <li>• React/Next.js</li>
-                  <li>• Node.js/Express</li>
-                  <li>• Tailwind CSS</li>
-                  <li>• Git/GitHub</li>
-                  <li>• Docker</li>
-                  <li>• myPHPadmin</li>
-                </ul>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold text-purple-300">Frameworks & Tools</h2>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                  <p>React/Next.js</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                  <p>Node.js/Express</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                  <p>Tailwind CSS</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                  <p>Git/GitHub</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                  <p>Docker</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                  <p>myPHPadmin</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-2">🎯 What I Do</h3>
-            <p className="text-sm text-gray-200">
-              I specialize in building responsive web applications, creating intuitive user interfaces, 
-              and developing scalable backend solutions. I believe in clean code, great UX, and continuous learning.
+          <div className="text-center pt-4">
+            <p className="text-gray-300">
+              I love building innovative solutions and learning new technologies!
             </p>
           </div>
         </div>
-        <button className="mt-6 underline hover:text-blue-300 transition-colors" onClick={onClose}>
-          close
-        </button>
       </div>
-    </div>
+    </Window>
   );
 } 
