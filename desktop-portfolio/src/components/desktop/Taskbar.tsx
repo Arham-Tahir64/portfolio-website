@@ -1,3 +1,5 @@
+import React from "react";
+
 interface TaskbarProps {
   isDarkMode: boolean;
   onToggleTheme: () => void;
@@ -11,8 +13,7 @@ export default function Taskbar({ isDarkMode, onToggleTheme, runningApps, onAppC
       <div className="flex items-center justify-between px-4 py-2">
         <div className="flex items-center space-x-4">
           <button className="flex items-center space-x-2 text-white hover:bg-white/10 px-3 py-1 rounded transition-colors">
-            <span className="text-lg">🚀</span>
-            <span className="text-sm">Start</span>
+            <span className="text-lg">⏻</span>
           </button>
         </div>
 

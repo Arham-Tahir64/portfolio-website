@@ -58,7 +58,7 @@ export default function Desktop() {
         isDarkMode={isDarkMode}
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
         runningApps={runningApps}
-        onAppClick={(appName) => {
+        onAppClick={(appName: string) => {
           if (openApps[appName]) {
             setOpenApps(prev => ({ ...prev, [appName]: false }));
           } else {
