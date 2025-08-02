@@ -28,4 +28,4 @@ export default function BootScreen({ onComplete }: BootScreenProps) {
       <p>Booting Desktop Portfolio{dots}</p>
     </div>
   );
-}
+} 
