@@ -9,6 +9,7 @@ export default function Desktop() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [openApps, setOpenApps] = useState<{ [key: string]: boolean }>({});
   const [minimizedApps, setMinimizedApps] = useState<{ [key: string]: boolean }>({});
+  const [appOrder, setAppOrder] = useState<string[]>(["projects", "about", "resume", "github"]);
 
   const lightGradient = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
   const darkGradient = "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)";
@@ -41,7 +42,20 @@ export default function Desktop() {
     }
   };
 
-  const runningApps = Object.keys({ ...openApps, ...minimizedApps }).filter(
+  const handleReorderApps = (newOrder: string[]) => {
+    setAppOrder(newOrder);
+  };
+
+  const handleDesktopClick = () => {
+    // Minimize all open apps that aren't fullscreen
+    Object.keys(openApps).forEach(appName => {
+      if (openApps[appName]) {
+        minimizeApp(appName);
+      }
+    });
+  };
+
+  const runningApps = appOrder.filter(
     app => openApps[app] || minimizedApps[app]
   );
 
@@ -52,10 +66,14 @@ export default function Desktop() {
         background: isDarkMode ? darkGradient : lightGradient,
         backgroundSize: "cover"
       }}
+      onClick={handleDesktopClick}
     >
       <button
         className="absolute left-8 top-8 flex flex-col items-center text-white drop-shadow-lg hover:scale-105 transition-transform duration-200 w-20"
-        onClick={() => openApp("projects")}
+        onClick={(e) => {
+          e.stopPropagation();
+          openApp("projects");
+        }}
       >
         <span className="text-4xl mb-2">📁</span>
         <span className="text-sm text-center">My Projects</span>
@@ -63,7 +81,10 @@ export default function Desktop() {
 
       <button
         className="absolute left-8 top-32 flex flex-col items-center text-white drop-shadow-lg hover:scale-105 transition-transform duration-200 w-20"
-        onClick={() => openApp("about")}
+        onClick={(e) => {
+          e.stopPropagation();
+          openApp("about");
+        }}
       >
         <span className="text-4xl mb-2">👤</span>
         <span className="text-sm text-center">About Me</span>
@@ -71,7 +92,10 @@ export default function Desktop() {
 
       <button
         className="absolute left-8 top-56 flex flex-col items-center text-white drop-shadow-lg hover:scale-105 transition-transform duration-200 w-20"
-        onClick={() => openApp("resume")}
+        onClick={(e) => {
+          e.stopPropagation();
+          openApp("resume");
+        }}
       >
         <span className="text-4xl mb-2">📄</span>
         <span className="text-sm text-center">Resume</span>
@@ -79,7 +103,10 @@ export default function Desktop() {
 
       <button
         className="absolute left-8 top-80 flex flex-col items-center text-white drop-shadow-lg hover:scale-105 transition-transform duration-200 w-20"
-        onClick={() => openApp("github")}
+        onClick={(e) => {
+          e.stopPropagation();
+          openApp("github");
+        }}
       >
         <img src="/github.png" alt="GitHub" className="w-16 h-16 mb-2" />
         <span className="text-sm text-center">GitHub</span>
@@ -114,6 +141,7 @@ export default function Desktop() {
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
         runningApps={runningApps}
         onAppClick={handleTaskbarClick}
+        onReorderApps={handleReorderApps}
       />
     </div>
   );
