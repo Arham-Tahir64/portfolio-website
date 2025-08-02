@@ -3,11 +3,12 @@ import Window from "../desktop/Window";
 interface AboutMeProps {
   isOpen: boolean;
   onClose: () => void;
+  onMinimize: () => void;
 }
 
-export default function AboutMe({ isOpen, onClose }: AboutMeProps) {
+export default function AboutMe({ isOpen, onClose, onMinimize }: AboutMeProps) {
   return (
-    <Window isOpen={isOpen} onClose={onClose} title="About Me">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} title="About Me">
       <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">

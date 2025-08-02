@@ -8,19 +8,42 @@ import Taskbar from "./Taskbar";
 export default function Desktop() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [openApps, setOpenApps] = useState<{ [key: string]: boolean }>({});
+  const [minimizedApps, setMinimizedApps] = useState<{ [key: string]: boolean }>({});
 
   const lightGradient = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
   const darkGradient = "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)";
 
   const openApp = (appName: string) => {
     setOpenApps(prev => ({ ...prev, [appName]: true }));
+    setMinimizedApps(prev => ({ ...prev, [appName]: false }));
   };
 
   const closeApp = (appName: string) => {
     setOpenApps(prev => ({ ...prev, [appName]: false }));
+    setMinimizedApps(prev => ({ ...prev, [appName]: false }));
   };
 
-  const runningApps = Object.keys(openApps).filter(app => openApps[app]);
+  const minimizeApp = (appName: string) => {
+    setOpenApps(prev => ({ ...prev, [appName]: false }));
+    setMinimizedApps(prev => ({ ...prev, [appName]: true }));
+  };
+
+  const handleTaskbarClick = (appName: string) => {
+    if (openApps[appName]) {
+      // If app is open, minimize it
+      minimizeApp(appName);
+    } else if (minimizedApps[appName]) {
+      // If app is minimized, restore it
+      openApp(appName);
+    } else {
+      // If app is closed, open it
+      openApp(appName);
+    }
+  };
+
+  const runningApps = Object.keys({ ...openApps, ...minimizedApps }).filter(
+    app => openApps[app] || minimizedApps[app]
+  );
 
   return (
     <div
@@ -64,35 +87,33 @@ export default function Desktop() {
 
       <Projects 
         isOpen={openApps.projects || false} 
-        onClose={() => closeApp("projects")} 
+        onClose={() => closeApp("projects")}
+        onMinimize={() => minimizeApp("projects")}
       />
       
       <AboutMe 
         isOpen={openApps.about || false} 
-        onClose={() => closeApp("about")} 
+        onClose={() => closeApp("about")}
+        onMinimize={() => minimizeApp("about")}
       />
 
       <Resume 
         isOpen={openApps.resume || false} 
-        onClose={() => closeApp("resume")} 
+        onClose={() => closeApp("resume")}
+        onMinimize={() => minimizeApp("resume")}
       />
 
       <GitHub 
         isOpen={openApps.github || false} 
-        onClose={() => closeApp("github")} 
+        onClose={() => closeApp("github")}
+        onMinimize={() => minimizeApp("github")}
       />
 
       <Taskbar
         isDarkMode={isDarkMode}
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
         runningApps={runningApps}
-        onAppClick={(appName: string) => {
-          if (openApps[appName]) {
-            setOpenApps(prev => ({ ...prev, [appName]: false }));
-          } else {
-            setOpenApps(prev => ({ ...prev, [appName]: true }));
-          }
-        }}
+        onAppClick={handleTaskbarClick}
       />
     </div>
   );

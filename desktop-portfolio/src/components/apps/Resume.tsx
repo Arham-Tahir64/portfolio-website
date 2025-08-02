@@ -3,11 +3,12 @@ import Window from "../desktop/Window";
 interface ResumeProps {
   isOpen: boolean;
   onClose: () => void;
+  onMinimize: () => void;
 }
 
-export default function Resume({ isOpen, onClose }: ResumeProps) {
+export default function Resume({ isOpen, onClose, onMinimize }: ResumeProps) {
   return (
-    <Window isOpen={isOpen} onClose={onClose} title="Resume">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} title="Resume">
       <div className="h-full">
         <iframe
           src="/resume.pdf"

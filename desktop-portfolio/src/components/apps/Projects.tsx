@@ -3,11 +3,12 @@ import Window from "../desktop/Window";
 interface ProjectsProps {
   isOpen: boolean;
   onClose: () => void;
+  onMinimize: () => void;
 }
 
-export default function Projects({ isOpen, onClose }: ProjectsProps) {
+export default function Projects({ isOpen, onClose, onMinimize }: ProjectsProps) {
   return (
-    <Window isOpen={isOpen} onClose={onClose} title="My Projects">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} title="My Projects">
       <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">

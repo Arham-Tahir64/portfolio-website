@@ -3,18 +3,18 @@ import React, { useState } from "react";
 interface WindowProps {
   isOpen: boolean;
   onClose: () => void;
+  onMinimize: () => void;
   title: string;
   children: React.ReactNode;
 }
 
-export default function Window({ isOpen, onClose, title, children }: WindowProps) {
+export default function Window({ isOpen, onClose, onMinimize, title, children }: WindowProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
 
   if (!isOpen) return null;
 
   const handleMinimize = () => {
-    setIsMinimized(true);
+    onMinimize();
   };
 
   const handleFullscreen = () => {
@@ -22,12 +22,9 @@ export default function Window({ isOpen, onClose, title, children }: WindowProps
   };
 
   const handleClose = () => {
-    setIsMinimized(false);
     setIsFullscreen(false);
     onClose();
   };
-
-  if (isMinimized) return null;
 
   return (
     <div className={`fixed inset-0 z-50 ${isFullscreen ? '' : 'p-8'}`}>
