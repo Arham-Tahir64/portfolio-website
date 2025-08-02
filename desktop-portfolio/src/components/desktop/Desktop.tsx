@@ -2,6 +2,7 @@ import { useState } from "react";
 import AboutMe from "../apps/AboutMe";
 import Projects from "../apps/Projects";
 import Resume from "../apps/Resume";
+import GitHub from "../apps/GitHub";
 import Taskbar from "./Taskbar";
 
 export default function Desktop() {
@@ -53,6 +54,14 @@ export default function Desktop() {
         <span className="text-sm text-center">Resume</span>
       </button>
 
+      <button
+        className="absolute left-8 top-80 flex flex-col items-center text-white drop-shadow-lg hover:scale-105 transition-transform duration-200 w-20"
+        onClick={() => openApp("github")}
+      >
+        <img src="/github.png" alt="GitHub" className="w-16 h-16 mb-2" />
+        <span className="text-sm text-center">GitHub</span>
+      </button>
+
       <Projects 
         isOpen={openApps.projects || false} 
         onClose={() => closeApp("projects")} 
@@ -66,6 +75,11 @@ export default function Desktop() {
       <Resume 
         isOpen={openApps.resume || false} 
         onClose={() => closeApp("resume")} 
+      />
+
+      <GitHub 
+        isOpen={openApps.github || false} 
+        onClose={() => closeApp("github")} 
       />
 
       <Taskbar
