@@ -140,6 +140,7 @@ export default function Desktop() {
         runningApps={runningApps}
         onAppClick={handleTaskbarClick}
         onReorderApps={handleReorderApps}
+        onSleep={() => window.location.reload()}
       />
     </div>
   );
