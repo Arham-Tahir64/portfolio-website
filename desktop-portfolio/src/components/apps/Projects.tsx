@@ -34,12 +34,13 @@ export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChan
             </div>
 
             <div className="bg-white/10 rounded-lg p-6 border border-white/20">
-              <h3 className="text-xl font-semibold mb-3 text-green-300">Coming Soon</h3>
+              <h3 className="text-xl font-semibold mb-3 text-green-300">AI Game Assistant</h3>
               <p className="text-gray-200 mb-4">
-                More exciting projects are in development. Stay tuned for updates!
+               A lightweight, Python-powered tool that layers computer-vision on top of a game. Using YOLOv8 for real-time object detection, it scans the live game feed to spot on-screen threats and triggers context-aware actions (e.g., lowering Spotify volume) so you can react faster without distraction.
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded">In Progress</span>
+                <span className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded">Python</span>
+                <span className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded">YoloV8</span>
               </div>
             </div>
           </div>
