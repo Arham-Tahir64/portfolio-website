@@ -4,15 +4,16 @@ interface GitHubProps {
   isOpen: boolean;
   onClose: () => void;
   onMinimize: () => void;
+  onFullscreenChange?: (isFullscreen: boolean) => void;
 }
 
-export default function GitHub({ isOpen, onClose, onMinimize }: GitHubProps) {
+export default function GitHub({ isOpen, onClose, onMinimize, onFullscreenChange }: GitHubProps) {
   const handleGitHubClick = () => {
     window.open('https://github.com/Arham-Tahir64', '_blank');
   };
 
   return (
-    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} title="GitHub Profile">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} title="GitHub Profile">
       <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">

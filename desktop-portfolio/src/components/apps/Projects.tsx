@@ -4,11 +4,12 @@ interface ProjectsProps {
   isOpen: boolean;
   onClose: () => void;
   onMinimize: () => void;
+  onFullscreenChange?: (isFullscreen: boolean) => void;
 }
 
-export default function Projects({ isOpen, onClose, onMinimize }: ProjectsProps) {
+export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChange }: ProjectsProps) {
   return (
-    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} title="My Projects">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} title="My Projects">
       <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">

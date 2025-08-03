@@ -4,27 +4,34 @@ interface WindowProps {
   isOpen: boolean;
   onClose: () => void;
   onMinimize: () => void;
+  onFullscreenChange?: (isFullscreen: boolean) => void;
   title: string;
   children: React.ReactNode;
 }
 
-export default function Window({ isOpen, onClose, onMinimize, title, children }: WindowProps) {
+export default function Window({ isOpen, onClose, onMinimize, onFullscreenChange, title, children }: WindowProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
 
-  const handleMinimize = () => {
+  const handleMinimize = (e: React.MouseEvent) => {
+    e.stopPropagation();
     onMinimize();
   };
 
-  const handleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+  const handleFullscreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newFullscreenState = !isFullscreen;
+    setIsFullscreen(newFullscreenState);
+    onFullscreenChange?.(newFullscreenState);
   };
 
-  const handleClose = () => {
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsFullscreen(false);
+    onFullscreenChange?.(false);
     setPosition({ x: 0, y: 0 });
     onClose();
   };
@@ -78,17 +85,27 @@ export default function Window({ isOpen, onClose, onMinimize, title, children }:
 
   return (
     <div 
-      className={`fixed inset-0 z-50 ${isFullscreen ? '' : 'p-8'}`}
+      className={`fixed z-50 ${isFullscreen ? 'inset-0' : 'p-8'}`}
       style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
+      onClick={(e) => {
+        if (isFullscreen) {
+          e.stopPropagation();
+        }
+      }}
     >
       <div 
         ref={windowRef}
-        className={`bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-2xl ${
-          isFullscreen ? 'h-full w-full' : 'max-w-4xl max-h-[80vh]'
+        className={`bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl ${
+          isFullscreen ? 'h-full w-full rounded-none' : 'max-w-4xl max-h-[80vh] rounded-lg'
         } ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{
           transform: isFullscreen ? 'none' : `translate(${position.x}px, ${position.y}px)`,
           transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+        }}
+        onClick={(e) => {
+          if (isFullscreen) {
+            e.stopPropagation();
+          }
         }}
       >
         <div 
@@ -99,16 +116,19 @@ export default function Window({ isOpen, onClose, onMinimize, title, children }:
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleClose}
+                onMouseDown={(e) => e.stopPropagation()}
                 className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors"
                 title="Close"
               />
               <button
                 onClick={handleMinimize}
+                onMouseDown={(e) => e.stopPropagation()}
                 className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-400 transition-colors"
                 title="Minimize"
               />
               <button
                 onClick={handleFullscreen}
+                onMouseDown={(e) => e.stopPropagation()}
                 className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-400 transition-colors"
                 title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
               />
@@ -118,7 +138,7 @@ export default function Window({ isOpen, onClose, onMinimize, title, children }:
           </div>
         </div>
 
-        <div className={`overflow-auto ${isFullscreen ? 'h-full' : 'max-h-[calc(80vh-80px)]'}`}>
+        <div className={`overflow-auto ${isFullscreen ? 'h-[calc(100%-60px)]' : 'max-h-[calc(80vh-80px)]'}`}>
           {children}
         </div>
       </div>

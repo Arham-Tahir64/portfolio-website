@@ -4,11 +4,12 @@ interface AboutMeProps {
   isOpen: boolean;
   onClose: () => void;
   onMinimize: () => void;
+  onFullscreenChange?: (isFullscreen: boolean) => void;
 }
 
-export default function AboutMe({ isOpen, onClose, onMinimize }: AboutMeProps) {
+export default function AboutMe({ isOpen, onClose, onMinimize, onFullscreenChange }: AboutMeProps) {
   return (
-    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} title="About Me">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} title="About Me">
       <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">
