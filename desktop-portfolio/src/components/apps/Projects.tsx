@@ -8,104 +8,222 @@ interface ProjectsProps {
   onFullscreenChange?: (isFullscreen: boolean) => void;
 }
 
+interface FileItem {
+  id: string;
+  name: string;
+  type: "folder" | "file";
+  icon: string;
+  description?: string;
+  url?: string;
+  tags?: string[];
+  lastModified: string;
+}
+
 export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChange }: ProjectsProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<"list" | "details">("details");
+
+  const fileItems: FileItem[] = [
     {
-      id: 1,
-      title: "Portfolio Website",
-      description: "My personal portfolio built as a desktop environment. Started as a simple React app but got carried away with the desktop theme. Still adding features when I have time.",
+      id: "portfolio",
+      name: "Portfolio Website",
+      type: "folder",
+      icon: "📁",
+      description: "My personal portfolio built as a desktop environment",
       url: "github.com/Arham-Tahir64/portfolio-website",
       tags: ["React", "TypeScript", "Tailwind"],
-      type: "Personal Project",
-      lastUpdated: "2 weeks ago"
+      lastModified: "2 weeks ago",
     },
     {
-      id: 2,
-      title: "Game Assistant Tool",
-      description: "A Python script that uses computer vision to detect in-game events. Originally made to auto-pause Spotify when I die in games, but ended up being more useful than expected. Uses YOLOv8 for object detection.",
-      url: "github.com/Arham-Tahir64/game-assistant",
+      id: "game-assistant",
+      name: "Game Assistant Tool",
+      type: "folder",
+      icon: "🎮",
+      description: "Python script that uses computer vision to detect in-game events",
+      url: "github.com/Arham-Tahir64/ai-game-control",
       tags: ["Python", "OpenCV", "YOLOv8"],
-      type: "Utility Tool",
-      lastUpdated: "1 month ago"
+      lastModified: "1 week ago",
     },
-  ]);
+    {
+      id: "crypto-tracker",
+      name: "Crypto Tracker",
+      type: "folder",
+      icon: "📝",
+      description: "Full stack crypto tracker with real-time data and portfolio management using google auth ",
+      url: "github.com/Arham-Tahir64/Crypto-Tracker",
+      tags: ["React", "Python", "Postgres", "Google Auth"],
+      lastModified: "3 months ago",
+    },
+    {
+      id: "bounty-fun",
+      name: "Bounty Fun",
+      type: "folder",
+      icon: "🌤️",
+      description: "Bounty fun is a web app that allows you to create and manage your own bounty board on solana",
+      url: "github.com/Arham-Tahir64/bounty-fun",
+      tags: ["React", "Rust"],
+      lastModified: "4 months ago",
+    },
+  ];
 
-  const handleSearch = () => {
-    console.log("Searching for:", searchQuery);
+  const handleItemClick = (itemId: string) => {
+    setSelectedItem(itemId);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+  const handleDoubleClick = (item: FileItem) => {
+    if (item.url) {
+      window.open(`https://${item.url}`, '_blank');
     }
   };
 
   return (
     <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} title="My Projects">
-      <div className="p-6 text-white min-h-full">
-        <div className="space-y-6">
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold text-blue-300">My Projects</h1>
-            <p className="text-gray-300">Stuff I've been working on</p>
-            
-            <div className="max-w-xl mx-auto">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Search projects..."
-                  className="w-full px-4 py-3 text-base bg-white/10 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                />
-                <button
-                  onClick={handleSearch}
-                  className="absolute right-2 top-2 px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors text-sm"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-          </div>
+      <div className="h-full flex flex-col bg-gray-100">
+        <div className="bg-gray-200 border-b border-gray-300 p-2 flex items-center space-x-2">
+          <button
+            onClick={() => setViewMode("list")}
+            className={`px-3 py-1 text-xs rounded ${viewMode === "list" ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-700"}`}
+          >
+            List
+          </button>
+          <button
+            onClick={() => setViewMode("details")}
+            className={`px-3 py-1 text-xs rounded ${viewMode === "details" ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-700"}`}
+          >
+            Details
+          </button>
+          <div className="flex-1"></div>
+          <span className="text-xs text-gray-600">
+            {fileItems.length} object(s)
+          </span>
+        </div>
 
-          <div className="space-y-4">
-            {searchResults.map((project) => (
-              <div key={project.id} className="bg-white/5 backdrop-blur-md rounded-lg p-5 border border-white/10 hover:bg-white/10 transition-colors">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-lg font-semibold text-blue-300 hover:text-blue-200 cursor-pointer">
-                        {project.title}
-                      </h3>
-                      <span className="text-xs px-2 py-1 bg-gray-600/30 text-gray-300 rounded">
-                        {project.type}
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        {project.lastUpdated}
-                      </span>
-                    </div>
-                    <p className="text-gray-300 mb-3 text-sm leading-relaxed">{project.description}</p>
-                    <div className="flex items-center space-x-4 text-sm">
-                      <span className="text-blue-400 hover:underline cursor-pointer text-xs">
-                        {project.url}
-                      </span>
-                      <div className="flex space-x-1">
-                        {project.tags.map((tag, index) => (
-                          <span
-                            key={index}
-                            className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+        <div className="bg-white border-b border-gray-300 p-2">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600">Address:</span>
+            <span className="text-sm font-mono bg-white border border-gray-300 px-2 py-1 rounded flex-1">
+              C:\Portfolio\Projects
+            </span>
+          </div>
+        </div>
+
+        <div className="flex-1 flex">
+          <div className="flex-1 bg-white">
+            {viewMode === "details" ? (
+              <div className="w-full">
+                <div className="bg-gray-100 border-b border-gray-300 grid grid-cols-12 text-xs font-bold text-gray-700 p-2">
+                  <div className="col-span-6">Name</div>
+                  <div className="col-span-3">Type</div>
+                  <div className="col-span-3">Date Modified</div>
+                </div>
+                
+                <div className="divide-y divide-gray-200">
+                  {fileItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className={`grid grid-cols-12 p-2 hover:bg-blue-50 cursor-pointer ${
+                        selectedItem === item.id ? "bg-blue-100" : ""
+                      }`}
+                      onClick={() => handleItemClick(item.id)}
+                      onDoubleClick={() => handleDoubleClick(item)}
+                    >
+                      <div className="col-span-6 flex items-center space-x-2">
+                        <span className="text-lg">{item.icon}</span>
+                        <span className="text-sm text-gray-800">{item.name}</span>
                       </div>
+                      <div className="col-span-3 text-xs text-gray-600">
+                        {item.type === "folder" ? "File Folder" : "Text Document"}
+                      </div>
+                      <div className="col-span-3 text-xs text-gray-600">{item.lastModified}</div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-            ))}
+            ) : (
+              <div className="p-4 grid grid-cols-6 gap-4">
+                {fileItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`text-center p-2 rounded hover:bg-blue-50 cursor-pointer ${
+                      selectedItem === item.id ? "bg-blue-100" : ""
+                    }`}
+                    onClick={() => handleItemClick(item.id)}
+                    onDoubleClick={() => handleDoubleClick(item)}
+                  >
+                    <div className="text-3xl mb-1">{item.icon}</div>
+                    <div className="text-xs text-gray-800 truncate">{item.name}</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* Details Panel */}
+          <div className="w-64 bg-gray-50 border-l border-gray-300 p-4">
+            {selectedItem ? (
+              <div>
+                <h3 className="font-bold text-gray-800 mb-4">Details</h3>
+                {(() => {
+                  const item = fileItems.find(f => f.id === selectedItem);
+                  if (!item) return null;
+                  
+                  return (
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-2xl">{item.icon}</span>
+                        <span className="font-semibold text-gray-800">{item.name}</span>
+                      </div>
+                      
+                      {item.description && (
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Description</div>
+                          <div className="text-sm text-gray-700">{item.description}</div>
+                        </div>
+                      )}
+                      
+                      {item.url && (
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">GitHub</div>
+                          <div className="text-sm text-blue-600 hover:underline cursor-pointer">
+                            {item.url}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {item.tags && (
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Technologies</div>
+                          <div className="flex flex-wrap gap-1">
+                            {item.tags.map((tag, index) => (
+                              <span
+                                key={index}
+                                className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1">Date Modified</div>
+                        <div className="text-sm text-gray-700">{item.lastModified}</div>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            ) : (
+              <div className="text-gray-500 text-sm">
+                Select an item to view details
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-gray-200 border-t border-gray-300 p-1 text-xs text-gray-600">
+          {selectedItem ? `Selected: ${fileItems.find(f => f.id === selectedItem)?.name}` : "Ready"}
         </div>
       </div>
     </Window>
