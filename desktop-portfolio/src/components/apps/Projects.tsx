@@ -158,7 +158,6 @@ export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChan
             )}
           </div>
 
-          {/* Details Panel */}
           <div className="w-64 bg-gray-50 border-l border-gray-300 p-4">
             {selectedItem ? (
               <div>

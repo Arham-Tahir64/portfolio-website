@@ -13,6 +13,7 @@ export default function Taskbar({ isDarkMode, onToggleTheme, runningApps, onAppC
   const [draggedApp, setDraggedApp] = useState<string | null>(null);
   const [dragOverApp, setDragOverApp] = useState<string | null>(null);
   const [showPowerMenu, setShowPowerMenu] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const getAppIcon = (appName: string) => {
     switch (appName) {
@@ -89,6 +90,15 @@ export default function Taskbar({ isDarkMode, onToggleTheme, runningApps, onAppC
     }
   }, [showPowerMenu]);
 
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gray-900/90 backdrop-blur-md border-t border-gray-700">
       <div className="flex items-center h-14 px-3">
@@ -157,7 +167,7 @@ export default function Taskbar({ isDarkMode, onToggleTheme, runningApps, onAppC
             {isDarkMode ? "☀️" : "🌙"}
           </button>
           <div className="text-white text-sm px-3">
-            {new Date().toLocaleTimeString()}
+            {currentTime.toLocaleTimeString()}
           </div>
         </div>
       </div>
