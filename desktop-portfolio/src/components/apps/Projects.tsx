@@ -6,6 +6,9 @@ interface ProjectsProps {
   onClose: () => void;
   onMinimize: () => void;
   onFullscreenChange?: (isFullscreen: boolean) => void;
+  onFocus?: () => void;
+  isFocused?: boolean;
+  zIndex?: number;
 }
 
 interface FileItem {
@@ -19,7 +22,7 @@ interface FileItem {
   lastModified: string;
 }
 
-export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChange }: ProjectsProps) {
+export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChange, onFocus, isFocused, zIndex }: ProjectsProps) {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"list" | "details">("details");
 
@@ -77,7 +80,7 @@ export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChan
   };
 
   return (
-    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} title="My Projects">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} onFocus={onFocus} isFocused={isFocused} zIndex={zIndex} title="My Projects">
       <div className="h-full flex flex-col bg-gray-100">
         <div className="bg-gray-200 border-b border-gray-300 p-2 flex items-center space-x-2">
           <button
@@ -183,9 +186,15 @@ export default function Projects({ isOpen, onClose, onMinimize, onFullscreenChan
                       {item.url && (
                         <div>
                           <div className="text-xs text-gray-500 mb-1">GitHub</div>
-                          <div className="text-sm text-blue-600 hover:underline cursor-pointer">
+                          <a
+                            href={`https://${item.url}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-600 hover:underline"
+                            aria-label={`Open ${item.name} on GitHub`}
+                          >
                             {item.url}
-                          </div>
+                          </a>
                         </div>
                       )}
                       

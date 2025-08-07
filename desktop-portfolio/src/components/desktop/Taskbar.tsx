@@ -109,6 +109,9 @@ export default function Taskbar({ isDarkMode, onToggleTheme, runningApps, onAppC
               setShowPowerMenu(!showPowerMenu);
             }}
             className="flex items-center space-x-2 text-white hover:bg-gray-700 px-3 py-2 rounded transition-colors"
+            aria-label="Power menu"
+            aria-haspopup="menu"
+            aria-expanded={showPowerMenu}
           >
             <span className="text-xl">⏻</span>
           </button>
@@ -117,13 +120,15 @@ export default function Taskbar({ isDarkMode, onToggleTheme, runningApps, onAppC
              <div 
                className="absolute bottom-full left-0 mb-2 bg-gray-800 border border-gray-600 rounded-lg shadow-lg min-w-32"
                onClick={(e) => e.stopPropagation()}
+               role="menu"
              >
                <button
                  onClick={() => {
                    onSleep?.();
                    setShowPowerMenu(false);
                  }}
-                 className="w-full flex items-center space-x-2 px-3 py-2 text-white hover:bg-gray-700 text-left"
+                  className="w-full flex items-center space-x-2 px-3 py-2 text-white hover:bg-gray-700 text-left"
+                  role="menuitem"
                >
                  <span className="text-sm">💤</span>
                  <span className="text-sm">Sleep</span>
@@ -166,7 +171,7 @@ export default function Taskbar({ isDarkMode, onToggleTheme, runningApps, onAppC
           >
             {isDarkMode ? "☀️" : "🌙"}
           </button>
-          <div className="text-white text-sm px-3">
+          <div className="text-white text-sm px-3" title={currentTime.toLocaleDateString()}>
             {currentTime.toLocaleTimeString()}
           </div>
         </div>

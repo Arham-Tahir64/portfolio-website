@@ -5,15 +5,18 @@ interface GitHubProps {
   onClose: () => void;
   onMinimize: () => void;
   onFullscreenChange?: (isFullscreen: boolean) => void;
+  onFocus?: () => void;
+  isFocused?: boolean;
+  zIndex?: number;
 }
 
-export default function GitHub({ isOpen, onClose, onMinimize, onFullscreenChange }: GitHubProps) {
+export default function GitHub({ isOpen, onClose, onMinimize, onFullscreenChange, onFocus, isFocused, zIndex }: GitHubProps) {
   const handleGitHubClick = () => {
     window.open('https://github.com/Arham-Tahir64', '_blank');
   };
 
   return (
-    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} title="GitHub Profile">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} onFocus={onFocus} isFocused={isFocused} zIndex={zIndex} title="GitHub Profile">
       <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">
@@ -32,6 +35,7 @@ export default function GitHub({ isOpen, onClose, onMinimize, onFullscreenChange
             <button
               onClick={handleGitHubClick}
               className="px-8 py-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center space-x-3 mx-auto text-lg"
+              aria-label="Open GitHub profile in new tab"
             >
               <span>🐙</span>
               <span>Open GitHub</span>

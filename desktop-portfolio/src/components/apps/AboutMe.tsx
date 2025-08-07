@@ -5,11 +5,14 @@ interface AboutMeProps {
   onClose: () => void;
   onMinimize: () => void;
   onFullscreenChange?: (isFullscreen: boolean) => void;
+  onFocus?: () => void;
+  isFocused?: boolean;
+  zIndex?: number;
 }
 
-export default function AboutMe({ isOpen, onClose, onMinimize, onFullscreenChange }: AboutMeProps) {
+export default function AboutMe({ isOpen, onClose, onMinimize, onFullscreenChange, onFocus, isFocused, zIndex }: AboutMeProps) {
   return (
-    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} title="About Me">
+    <Window isOpen={isOpen} onClose={onClose} onMinimize={onMinimize} onFullscreenChange={onFullscreenChange} onFocus={onFocus} isFocused={isFocused} zIndex={zIndex} title="About Me">
       <div className="p-6 text-white">
         <div className="space-y-6">
           <div className="text-center">
@@ -79,16 +82,34 @@ export default function AboutMe({ isOpen, onClose, onMinimize, onFullscreenChang
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
-                  <p>myPHPadmin</p>
+                  <p>phpMyAdmin</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="text-center pt-4">
+          <div className="text-center pt-4 space-y-3">
             <p className="text-gray-300">
               I love building innovative solutions and learning new technologies!
             </p>
+            <div className="flex items-center justify-center gap-3">
+              <a
+                href="mailto:arhamtahir64@gmail.com"
+                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-colors"
+                aria-label="Email Arham"
+              >
+                ✉️ Email Me
+              </a>
+              <a
+                href="https://github.com/Arham-Tahir64"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-colors"
+                aria-label="Open GitHub profile"
+              >
+                🐙 GitHub
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default function BootScreen({ onComplete }: BootScreenProps) {
     const timeout = setTimeout(() => {
       onComplete();
       clearInterval(interval);
-    }, 3000);
+    }, 1500);
 
     return () => {
       clearTimeout(timeout);
@@ -39,7 +39,7 @@ export default function BootScreen({ onComplete }: BootScreenProps) {
             onClick={handleLogin}
             className="px-8 py-4 bg-green-500 text-black font-bold rounded-lg hover:bg-green-400 transition-colors duration-200"
           >
-            Log In
+            Enter
           </button>
         </div>
       </div>

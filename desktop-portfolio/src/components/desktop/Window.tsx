@@ -5,11 +5,14 @@ interface WindowProps {
   onClose: () => void;
   onMinimize: () => void;
   onFullscreenChange?: (isFullscreen: boolean) => void;
+  onFocus?: () => void;
+  isFocused?: boolean;
+  zIndex?: number;
   title: string;
   children: React.ReactNode;
 }
 
-export default function Window({ isOpen, onClose, onMinimize, onFullscreenChange, title, children }: WindowProps) {
+export default function Window({ isOpen, onClose, onMinimize, onFullscreenChange, onFocus, isFocused, zIndex, title, children }: WindowProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -85,8 +88,9 @@ export default function Window({ isOpen, onClose, onMinimize, onFullscreenChange
 
   return (
     <div 
-      className={`fixed z-50 ${isFullscreen ? 'inset-0' : 'p-8'}`}
-      style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
+      className={`fixed ${isFullscreen ? 'inset-0' : 'p-8'}`}
+      style={{ pointerEvents: isDragging ? 'none' : 'auto', zIndex: zIndex ?? 50 }}
+      onMouseDown={() => onFocus?.()}
       onClick={(e) => {
         if (isFullscreen) {
           e.stopPropagation();
@@ -97,7 +101,7 @@ export default function Window({ isOpen, onClose, onMinimize, onFullscreenChange
         ref={windowRef}
         className={`bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl ${
           isFullscreen ? 'h-full w-full rounded-none' : 'max-w-4xl max-h-[80vh] rounded-lg'
-        } ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        } ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${isFocused ? 'ring-2 ring-white/30' : ''}`}
         style={{
           transform: isFullscreen ? 'none' : `translate(${position.x}px, ${position.y}px)`,
           transition: isDragging ? 'none' : 'transform 0.1s ease-out'
